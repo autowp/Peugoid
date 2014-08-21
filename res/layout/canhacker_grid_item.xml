@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="100">
+
+        <TextView
+            android:id="@+id/canhacker_grid_header_n"
+            android:layout_gravity="clip_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:text="123"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/canhacker_grid_header_data"
+            android:layout_gravity="clip_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="80"
+            android:text="> t041654798434"
+            android:textAlignment="viewStart" />
+
+</LinearLayout>

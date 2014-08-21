@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    
+        <ToggleButton
+            android:id="@+id/tb_can_monitor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="Enabled"
+            android:textOff="Disabled"
+            android:text="" />
+        
+        <Button
+            android:id="@+id/btn_can_log_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/can_log_clear" />
+        
+    </LinearLayout>
+    
+    
+    
+    <!-- Header -->
+    
+    <LinearLayout
+        android:id="@+id/can_grid_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff347c12" >
+
+        <TextView
+            android:id="@+id/can_grid_header_n"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="10"
+            android:text="@string/can_grid_header_n" />
+
+        <TextView
+            android:id="@+id/can_grid_header_id"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:text="@string/can_grid_header_id" />
+        
+        <TextView
+            android:id="@+id/can_grid_header_data"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="40"
+            android:text="@string/can_grid_header_data" />
+        
+        <TextView
+            android:id="@+id/can_grid_header_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="30"
+            android:text="@string/can_grid_header_comment" />
+    </LinearLayout>
+
+    <!-- ListView (grid_items) -->
+
+    <LinearLayout
+        android:id="@+id/can_grid_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/can_log_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="100">
+
+    <TextView
+        android:id="@+id/log_grid_header_text"
+        android:layout_gravity="clip_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="100"
+        android:text=""
+        android:textAlignment="viewStart" />
+
+</LinearLayout>

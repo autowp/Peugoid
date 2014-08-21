@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    
+        <ToggleButton
+            android:id="@+id/tb_canhacker_monitor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="Enabled"
+            android:textOff="Disabled"
+            android:text="" />
+        
+        <Button
+            android:id="@+id/btn_canhacker_log_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/canhacker_log_clear" />
+        
+    </LinearLayout>
+    
+    <!-- Header -->
+    
+    <LinearLayout
+        android:id="@+id/canhacker_grid_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff347c12" >
+
+        <TextView
+            android:id="@+id/canhacker_grid_header_n"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:text="@string/canhacker_grid_header_n" />
+
+        <TextView
+            android:id="@+id/canhacker_grid_header_data"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="80"
+            android:text="@string/canhacker_grid_header_data" />
+    </LinearLayout>
+
+    <!-- ListView (grid_items) -->
+
+    <LinearLayout
+        android:id="@+id/canhacker_grid_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/cahnhacker_log_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

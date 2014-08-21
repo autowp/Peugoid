@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/can_grid_header_n"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="10"
+            android:layout_margin="10dp"
+            android:textAlignment="viewStart"
+            android:text="123" />
+
+        <TextView
+            android:id="@+id/can_grid_header_id"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:layout_margin="10dp"
+            android:textAlignment="viewStart"
+            android:text="4F6" />
+        
+        <TextView
+            android:id="@+id/can_grid_header_data"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="40"
+            android:layout_margin="10dp"
+            android:textAlignment="viewStart"
+            android:text="F46A325643123623416B" />
+        
+        <TextView
+            android:id="@+id/can_grid_header_comment"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="30"
+            android:layout_margin="10dp"
+            android:textAlignment="viewStart"
+            android:text="Parktronic state command" />
+
+</LinearLayout>

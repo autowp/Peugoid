@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Peugoid</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="canhacker_grid_header_n">#</string>
+    <string name="canhacker_grid_header_data">Data</string>
+    <string name="can_grid_header_n">#</string>
+    <string name="can_grid_header_id">id</string>
+    <string name="can_grid_header_data">Data</string>
+    <string name="can_grid_header_comment">Comment</string>
+    <string name="canhacker_log_clear">Clear</string>
+    <string name="can_log_clear">Clear</string>
+    <color name="parktronic_danger_color">#EF494D</color>
+    <color name="parktronic_warning_color">#F5AC45</color>
+    <color name="parktronic_normal_color">#8BC755</color>
+
+</resources>

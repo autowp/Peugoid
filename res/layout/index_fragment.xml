@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <Switch
+        android:id="@+id/switch_connect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Connect" />
+
+    <Switch
+        android:id="@+id/switch_ignition_emulate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Emulate" />
+    
+    <Switch
+        android:id="@+id/switch_parktronic_emulator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Parktronic emulator" />
+    
+</LinearLayout>
