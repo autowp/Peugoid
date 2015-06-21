@@ -116,6 +116,8 @@ public class CanLogFragment extends Fragment
     
     @Override
     public void handleCanMessageReceivedEvent(final CanMessage message) {
+        System.out.println("handleCanMessageReceivedEvent");
+        System.out.println(message);
         getActivity().runOnUiThread(new Runnable() { 
             public void run() {
                 

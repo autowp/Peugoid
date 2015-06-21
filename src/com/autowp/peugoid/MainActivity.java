@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Vector;
 
 import com.autowp.can.*;
-import com.autowp.canhacker.*;
 import com.autowp.peugeot.*;
 import com.autowp.peugeot.parktronic.*;
 
@@ -34,7 +33,7 @@ public class MainActivity extends FragmentActivity
         IndexFragment.OnConnectedStateChangeListener, 
         IndexFragment.OnIgnitionEmulateStateChangeListener,
         IndexFragment.OnParktronicEmulateStateChangeListener,
-        CanClient.OnConnectedStateChangeListener
+        CanClient.OnClientConnectedStateChangeListener
 {
     
     public static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
@@ -43,7 +42,7 @@ public class MainActivity extends FragmentActivity
  
     private UsbManager mUsbManager;
 
-    private CanHackerUsb mCanHacker;
+    //private CanHackerUsb mCanHacker;
     
     private String[] mTabs = { "Index", "CanHacker", "Can", "Parktronic", "Log" };
 
@@ -61,12 +60,14 @@ public class MainActivity extends FragmentActivity
     
     private boolean mCanHackerLogEnabled = false;
 
+    private ArduinoCanUsb mArduinoCan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
-        // Initilization
+        // Initialization
         mViewPager = (ViewPager) findViewById(R.id.pager);
         final ActionBar actionBar = getActionBar();
         
@@ -81,7 +82,7 @@ public class MainActivity extends FragmentActivity
  
         mViewPager.setAdapter(mTabsAdapter);
         actionBar.setHomeButtonEnabled(false);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);        
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
  
         // Adding Tabs
         for (String tab_name : mTabs) {
@@ -140,7 +141,7 @@ public class MainActivity extends FragmentActivity
         }
     }
     
-    public void setDevice(UsbDevice device) throws CanHackerUsbException, CanClientException
+    public void setDevice(UsbDevice device) throws CanClientException
     {
         resetDevice();
         
@@ -153,12 +154,13 @@ public class MainActivity extends FragmentActivity
         } else {
             System.out.println("hasPermission " + device.getDeviceName());
             
-            mCanHacker = new CanHackerUsb(mUsbManager, device);
+            //mCanHacker = new CanHackerUsb(mUsbManager, device);
+            mArduinoCan = new ArduinoCanUsb(mUsbManager, device);
             
             CanComfortSpecs canComfortSpecs = new CanComfortSpecs();
             
             mCanClient = new CanClient(canComfortSpecs);
-            mCanClient.setAdapter(mCanHacker);
+            mCanClient.setAdapter(mArduinoCan);
             
             mCanClient.connect();
             
@@ -202,6 +204,7 @@ public class MainActivity extends FragmentActivity
     private final BroadcastReceiver mUsbAttachedReceiver = new BroadcastReceiver() {
 
         public void onReceive(Context context, Intent intent) {
+            System.out.println("UsbAttachedReceiver.onReceive");
             String action = intent.getAction();
             if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
                 
@@ -209,13 +212,12 @@ public class MainActivity extends FragmentActivity
                 
                 System.out.println("BroadcastReceiver USB Connected");
                 System.out.println(device);
+                System.out.println(device.getProductId());
+                System.out.println(device.getVendorId());
                 
-                if (CanHackerUsb.isCanHacker(device)) {
+                if (ArduinoCanUsb.isArduinoCan(device)) {
                     try {
                         setDevice(device);
-                    } catch (CanHackerUsbException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
                     } catch (CanClientException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -253,7 +255,7 @@ public class MainActivity extends FragmentActivity
             
             mCanHackerLogEnabled = enabled;
             
-            CanHackerLogFragment canHackerLogFragment = (CanHackerLogFragment) mTabsAdapter.getItem(TabsPagerAdapter.CAN_HACKER_LOG_FRAGMENT);
+            /*CanHackerLogFragment canHackerLogFragment = (CanHackerLogFragment) mTabsAdapter.getItem(TabsPagerAdapter.CAN_HACKER_LOG_FRAGMENT);
             
             if (enabled) {
                 mCanHacker.addEventListener((CanHacker.OnCommandSentListener)canHackerLogFragment);
@@ -261,7 +263,7 @@ public class MainActivity extends FragmentActivity
             } else {
                 mCanHacker.removeEventListener((CanHacker.OnCommandSentListener)canHackerLogFragment);
                 mCanHacker.removeEventListener((CanHacker.OnResponseReceivedListener)canHackerLogFragment);
-            }
+            }*/
         }
         
     }
@@ -275,10 +277,12 @@ public class MainActivity extends FragmentActivity
         
             CanLogFragment canLogFragment = (CanLogFragment) mTabsAdapter.getItem(TabsPagerAdapter.CAN_LOG_FRAGMENT);
             
-            if (enabled) {
-                mCanClient.addEventListener(canLogFragment);
-            } else {
-                mCanClient.removeEventListener(canLogFragment);
+            if (mCanClient != null) {
+                if (enabled) {
+                    mCanClient.addEventListener(canLogFragment);
+                } else {
+                    mCanClient.removeEventListener(canLogFragment);
+                }
             }
         }
         
@@ -318,12 +322,13 @@ public class MainActivity extends FragmentActivity
         
                 while(deviceIterator.hasNext()) {
                     UsbDevice usbDevice = deviceIterator.next();
-                    if (CanHackerUsb.isCanHacker(usbDevice)) {
+                    System.out.println(usbDevice.getProductId());
+                    System.out.println(usbDevice.getVendorId());
+                    System.out.println(usbDevice.getDeviceName());
+                    System.out.println(usbDevice);
+                    if (ArduinoCanUsb.isArduinoCan(usbDevice)) {
                         try {
                             setDevice(usbDevice);
-                        } catch (CanHackerUsbException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
                         } catch (CanClientException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
@@ -369,9 +374,13 @@ public class MainActivity extends FragmentActivity
                         mCanClient.stopTimers();
                         emulationStarted = false;
                     } else {
-                        System.out.println("Start emulate");
-                        CanComfort.emulateCar(mCanClient, "21496464");
-                        emulationStarted = true;
+                        if (mCanClient != null) {
+                            System.out.println("Start emulate");
+                            CanComfort.emulateBSIIgnition(mCanClient, "21496464");
+                            emulationStarted = true;
+                        } else {
+                            System.out.println("unable to emulate on null client");
+                        }
                     }
                 } catch (CanComfortException e) {
                     // TODO Auto-generated catch block
@@ -397,6 +406,16 @@ public class MainActivity extends FragmentActivity
                 mParktronicEmulator.start();
             }
         }
+    }
+
+    @Override
+    public void handleClientConnectedStateChanged(boolean isConnected) {
+        IndexFragment indexFragment = (IndexFragment) mTabsAdapter.getItem(TabsPagerAdapter.INDEX_FRAGMENT);
+
+        if (indexFragment != null) {
+            indexFragment.refreshButton(isConnected);
+        }
+        
     }
 
 }
